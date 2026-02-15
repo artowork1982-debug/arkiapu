@@ -277,6 +277,18 @@ function moderni_teal_add_fetchpriority( $attr, $attachment, $size ) {
 add_filter( 'wp_get_attachment_image_attributes', 'moderni_teal_add_fetchpriority', 10, 3 );
 
 /**
+ * Lazy loading ja async decoding kuville
+ */
+function moderni_teal_lazy_loading( $attr, $attachment, $size ) {
+    if ( ! isset( $attr['fetchpriority'] ) || $attr['fetchpriority'] !== 'high' ) {
+        $attr['loading'] = 'lazy';
+        $attr['decoding'] = 'async';
+    }
+    return $attr;
+}
+add_filter( 'wp_get_attachment_image_attributes', 'moderni_teal_lazy_loading', 10, 3 );
+
+/**
  * Breadcrumb-navigaatio
  */
 function moderni_teal_breadcrumbs() {
@@ -530,6 +542,10 @@ function moderni_teal_schema_markup() {
             'headline' => get_the_title(),
             'datePublished' => get_the_date( 'c' ),
             'dateModified' => get_the_modified_date( 'c' ),
+            'mainEntityOfPage' => array(
+                '@type' => 'WebPage',
+                '@id' => get_permalink()
+            ),
             'author' => array(
                 '@type' => 'Person',
                 'name' => get_the_author()

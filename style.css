@@ -420,6 +420,10 @@ ol {
     padding-bottom: var(--spacing-sm);
     transition: padding var(--transition);
     margin-bottom: -33px;
+    background-color: rgba(1, 89, 81, 0.92);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    margin-left: var(--spacing-lg);
+    margin-right: var(--spacing-lg);
 }
 
 .site-header.scrolled .header-bottom {
@@ -445,7 +449,7 @@ ol {
     background: none;
     border: none;
     cursor: pointer;
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
     z-index: 1001;
     position: relative;
     width: 48px;
@@ -453,6 +457,9 @@ ol {
     min-width: 44px;
     min-height: 44px;
     transition: transform var(--transition);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: var(--border-radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
 }
 
 .menu-toggle:hover {
@@ -1081,6 +1088,30 @@ ol {
     .mobile-menu-contact,
     .mobile-menu-social {
         display: none;
+    }
+
+    /* White navigation links in header-bottom context */
+    .header-bottom .main-navigation ul li a {
+        color: #ffffff;
+    }
+
+    .header-bottom .main-navigation ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+    }
+
+    /* Dropdown menus in header-bottom context */
+    .header-bottom .main-navigation ul ul {
+        background-color: var(--color-primary);
+    }
+
+    .header-bottom .main-navigation ul ul li a {
+        color: #ffffff;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .header-bottom .main-navigation ul ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.15);
     }
 }
 
