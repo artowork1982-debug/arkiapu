@@ -201,6 +201,7 @@ ul, ol {
     z-index: 1001;
     overflow: hidden;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 /* Hienovarainen shimmer/valoefekti topbarin yli */
@@ -243,10 +244,6 @@ ul, ol {
     pointer-events: none;
 }
 
-.site-topbar {
-    transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
 /* Tablet ja desktop: hieman isompi fontti */
 @media (min-width: 768px) {
     .site-topbar__tagline {
@@ -268,6 +265,9 @@ ul, ol {
 
 /* Saavutettavuus: poista animaatiot */
 @media (prefers-reduced-motion: reduce) {
+    .site-topbar {
+        transition: none;
+    }
     .site-topbar::after {
         animation: none;
     }
