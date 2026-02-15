@@ -34,7 +34,7 @@ if ( $description || is_customize_preview() ) :
 <?php endif; ?>
 
 <header class="site-header" role="banner">
-    <div class="container" style="position: relative;">
+    <div class="container">
         <!-- Mobiilivalikon nappi oikeaan yläkulmaan -->
         <div class="mobile-menu">
             <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="<?php esc_attr_e( 'Avaa valikko', 'moderni-teal' ); ?>">
