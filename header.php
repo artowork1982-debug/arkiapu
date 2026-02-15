@@ -34,14 +34,15 @@ if ( $description || is_customize_preview() ) :
 <?php endif; ?>
 
 <header class="site-header" role="banner">
-<div class="mobile-menu">
+    <div class="container" style="position: relative;">
+        <!-- Mobiilivalikon nappi oikeaan yläkulmaan -->
+        <div class="mobile-menu">
             <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="<?php esc_attr_e( 'Avaa valikko', 'moderni-teal' ); ?>">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
-</div>
-    <div class="container">
+        </div>
 
         <!-- Yläosa: Logo keskitettynä -->
         <div class="header-top">
@@ -127,6 +128,16 @@ if ( $description || is_customize_preview() ) :
                     </div>
                 </div>
             </nav><!-- #site-navigation -->
+            
+            <!-- CTA-painike: Soita -->
+            <div class="header-cta">
+                <a href="tel:+358401234567" class="btn btn-cta-call">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                    </svg>
+                    Soita meille
+                </a>
+            </div>
         </div><!-- .header-bottom -->
 
     </div><!-- .container -->
