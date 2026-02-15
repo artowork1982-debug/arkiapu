@@ -8,6 +8,13 @@
 get_header();
 ?>
 
+<?php 
+// Show breadcrumbs on archive and search pages
+if ( is_archive() || is_search() ) {
+    moderni_teal_breadcrumbs(); 
+}
+?>
+
 <main id="primary" class="site-content" role="main">
     <div class="container">
 

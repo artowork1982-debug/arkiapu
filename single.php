@@ -8,6 +8,8 @@
 get_header();
 ?>
 
+<?php moderni_teal_breadcrumbs(); ?>
+
 <main id="primary" class="site-content" role="main">
     <div class="container">
         <div class="content-area<?php echo is_active_sidebar( 'sidebar-1' ) ? ' has-sidebar' : ''; ?>">
