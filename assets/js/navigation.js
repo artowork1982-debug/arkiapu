@@ -199,6 +199,7 @@
        Header Shrink skrollatessa
        ============================================= */
     const header = document.querySelector('.site-header');
+    const topbar = document.querySelector('.site-topbar');
     const threshold = 60; // pikselimäärä, jolloin shrink aktivoituu
 
     if (header) {
@@ -207,8 +208,14 @@
         function onScroll() {
             if (window.scrollY > threshold) {
                 header.classList.add('scrolled');
+                if (topbar) {
+                    topbar.classList.add('topbar-hidden');
+                }
             } else {
                 header.classList.remove('scrolled');
+                if (topbar) {
+                    topbar.classList.remove('topbar-hidden');
+                }
             }
             ticking = false;
         }

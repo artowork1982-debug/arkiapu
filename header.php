@@ -21,6 +21,17 @@
     <?php esc_html_e( 'Siirry sisältöön', 'moderni-teal' ); ?>
 </a>
 
+<?php
+$description = get_bloginfo( 'description', 'display' );
+if ( $description || is_customize_preview() ) :
+?>
+<div class="site-topbar">
+    <div class="container">
+        <p class="site-topbar__tagline"><?php echo esc_html( $description ); ?></p>
+    </div>
+</div>
+<?php endif; ?>
+
 <header class="site-header" role="banner">
     <div class="container">
 
@@ -37,12 +48,6 @@
                             <?php bloginfo( 'name' ); ?>
                         </a>
                     </h1>
-                    <?php
-                    $description = get_bloginfo( 'description', 'display' );
-                    if ( $description || is_customize_preview() ) :
-                    ?>
-                        <p class="site-description"><?php echo $description; ?></p>
-                    <?php endif; ?>
                 <?php endif; ?>
             </div><!-- .site-branding -->
         </div><!-- .header-top -->
