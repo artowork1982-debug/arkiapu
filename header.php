@@ -26,6 +26,7 @@ $description = get_bloginfo( 'description', 'display' );
 if ( $description || is_customize_preview() ) :
 ?>
 <div class="site-topbar">
+
     <div class="container">
         <p class="site-topbar__tagline"><?php echo esc_html( $description ); ?></p>
     </div>
@@ -33,6 +34,13 @@ if ( $description || is_customize_preview() ) :
 <?php endif; ?>
 
 <header class="site-header" role="banner">
+<div class="mobile-menu">
+            <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="<?php esc_attr_e( 'Avaa valikko', 'moderni-teal' ); ?>">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+</div>
     <div class="container">
 
         <!-- Yläosa: Logo keskitettynä -->
@@ -54,11 +62,6 @@ if ( $description || is_customize_preview() ) :
 
         <!-- Alaosa: Navigaatio -->
         <div class="header-bottom">
-            <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="<?php esc_attr_e( 'Avaa valikko', 'moderni-teal' ); ?>">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
 
             <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Päävalikko', 'moderni-teal' ); ?>" aria-hidden="true">
                 <div class="mobile-menu-overlay">

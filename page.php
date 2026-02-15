@@ -15,9 +15,7 @@ get_header();
 
         <?php while ( have_posts() ) : the_post(); ?>
 
-        <div class="page-hero">
-            <h1><?php the_title(); ?></h1>
-        </div>
+ 
 
         <article id="page-<?php the_ID(); ?>" <?php post_class(); ?>>
             <div class="entry-content" style="max-width: 800px; margin: 0 auto;">

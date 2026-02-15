@@ -26,7 +26,7 @@
         const focusableElements = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
         let firstFocusableElement;
         let lastFocusableElement;
-        
+
         // Update focusable elements list
         function updateFocusableElements() {
             const focusableContent = nav.querySelectorAll(focusableElements);
@@ -36,13 +36,13 @@
             firstFocusableElement = visibleFocusable[0];
             lastFocusableElement = visibleFocusable[visibleFocusable.length - 1];
         }
-        
+
         // Open menu function
         function openMenu() {
             nav.setAttribute('aria-hidden', 'false');
             toggle.setAttribute('aria-expanded', 'true');
             body.style.overflow = 'hidden';
-            
+
             // Add staggered animation to menu items
             setTimeout(() => {
                 updateFocusableElements();
@@ -51,42 +51,42 @@
                 }
             }, MENU_OPEN_FOCUS_DELAY);
         }
-        
+
         // Close menu function
         function closeMenu() {
             nav.setAttribute('aria-hidden', 'true');
             toggle.setAttribute('aria-expanded', 'false');
             body.style.overflow = '';
-            
+
             // Close all open submenus
             const openSubmenus = nav.querySelectorAll('.menu-item-has-children.submenu-open');
             openSubmenus.forEach(item => {
                 item.classList.remove('submenu-open');
             });
-            
+
             // Return focus to toggle button
             toggle.focus();
         }
-        
+
         // Hampurilaisvalikon toggle
         toggle.addEventListener('click', function (e) {
             e.preventDefault();
             const isOpen = nav.getAttribute('aria-hidden') === 'false';
-            
+
             if (isOpen) {
                 closeMenu();
             } else {
                 openMenu();
             }
         });
-        
+
         // Focus trap
-        nav.addEventListener('keydown', function(e) {
+        nav.addEventListener('keydown', function (e) {
             if (nav.getAttribute('aria-hidden') === 'false') {
                 const isTabPressed = e.key === 'Tab';
-                
+
                 if (!isTabPressed) return;
-                
+
                 if (e.shiftKey) { // Shift + Tab
                     if (document.activeElement === firstFocusableElement) {
                         lastFocusableElement.focus();
@@ -109,13 +109,13 @@
                 if (parentLi.classList.contains('menu-item-has-children')) {
                     return;
                 }
-                
+
                 if (window.innerWidth < 768) {
                     closeMenu();
                 }
             });
         });
-        
+
         // Submenu links should close the menu
         nav.querySelectorAll('.sub-menu a').forEach(function (link) {
             link.addEventListener('click', function () {
@@ -127,18 +127,18 @@
 
         // Accordion toggle for submenus on mobile
         const menuItemsWithChildren = nav.querySelectorAll('.menu-item-has-children');
-        
-        menuItemsWithChildren.forEach(function(item) {
+
+        menuItemsWithChildren.forEach(function (item) {
             const link = item.querySelector('> a');
-            
+
             if (link) {
-                link.addEventListener('click', function(e) {
+                link.addEventListener('click', function (e) {
                     if (window.innerWidth < 768) {
                         e.preventDefault();
-                        
+
                         // Toggle this submenu
                         item.classList.toggle('submenu-open');
-                        
+
                         // Update focusable elements after opening submenu
                         if (item.classList.contains('submenu-open')) {
                             setTimeout(updateFocusableElements, SUBMENU_ANIMATION_DURATION);
@@ -163,11 +163,11 @@
                 }
             }
         });
-        
+
         // Prevent clicks on menu content from closing
         const menuContent = nav.querySelector('.mobile-menu-content');
         if (menuContent) {
-            menuContent.addEventListener('click', function(e) {
+            menuContent.addEventListener('click', function (e) {
                 e.stopPropagation();
             });
         }
@@ -184,7 +184,7 @@
                         toggle.setAttribute('aria-expanded', 'false');
                         body.style.overflow = '';
                     }
-                    
+
                     // Close all submenus
                     const openSubmenus = nav.querySelectorAll('.menu-item-has-children.submenu-open');
                     openSubmenus.forEach(item => {
