@@ -1160,15 +1160,14 @@ ol {
 
 /* CTA Call Button */
 .header-cta {
-    display: none;
-    /* Piilotetaan mobiilissa */
+    display: none !important;
+    /* Old CTA structure - replaced by .header-cta-call */
 }
 
 @media (min-width: 768px) {
     .header-cta {
-        display: flex;
-        align-items: center;
-        margin-left: var(--spacing-md);
+        display: none !important;
+        /* Old CTA structure - replaced by .header-cta-call */
     }
 }
 
