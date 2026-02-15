@@ -420,10 +420,12 @@ ol {
     padding-bottom: var(--spacing-sm);
     transition: padding var(--transition);
     margin-bottom: -33px;
-    background-color: rgba(1, 89, 81, 0.92);
+    background-color: rgba(255, 255, 255, 0.85);
     border-radius: 0 0 var(--border-radius) var(--border-radius);
-    margin-left: var(--spacing-lg);
-    margin-right: var(--spacing-lg);
+    padding: var(--spacing-xs) var(--spacing-md) var(--spacing-sm);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .site-header.scrolled .header-bottom {
@@ -446,10 +448,10 @@ ol {
     justify-content: center;
     align-items: center;
     gap: 6px;
-    background: none;
-    border: none;
+    background-color: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(1, 89, 81, 0.2);
     cursor: pointer;
-    padding: var(--spacing-sm);
+    padding: var(--spacing-md);
     z-index: 1001;
     position: relative;
     width: 48px;
@@ -457,9 +459,10 @@ ol {
     min-width: 44px;
     min-height: 44px;
     transition: transform var(--transition);
-    background-color: rgba(255, 255, 255, 0.9);
     border-radius: var(--border-radius);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .menu-toggle:hover {
@@ -626,8 +629,8 @@ ol {
 #primary-menu>li>a {
     display: block;
     padding: var(--spacing-md) var(--spacing-lg);
-    color: #ffffff;
-    background-color: #fff;
+    color: var(--color-primary);
+    background-color: #ffffff;
     font-size: 2rem;
     font-weight: 600;
     text-align: center;
@@ -635,12 +638,13 @@ ol {
     position: relative;
     transition: all 0.3s ease;
     border-radius: var(--border-radius);
-    border: 2px solid #015951;
+    border: 2px solid var(--color-primary);
 }
 
 #primary-menu>li>a:hover,
 #primary-menu>li>a:focus {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--color-primary);
+    color: #ffffff;
     transform: translateX(5px);
 }
 
@@ -996,10 +1000,14 @@ ol {
     #primary-menu>li>a {
         font-size: 1rem;
         font-weight: 500;
-        color: var(--color-text);
+        color: var(--color-primary-dark);
+        background-color: rgba(255, 255, 255, 0.92);
         padding: var(--spacing-sm) var(--spacing-md);
         border-radius: var(--border-radius);
         text-align: left;
+        border: 1px solid rgba(1, 89, 81, 0.2);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
     }
 
     #primary-menu>li>a::after {
@@ -1012,15 +1020,17 @@ ol {
 
     #primary-menu>li>a:hover,
     #primary-menu>li>a:focus {
-        background-color: var(--color-gray-100);
-        color: var(--color-primary);
+        background-color: var(--color-primary);
+        color: #ffffff;
         transform: none;
+        border-color: var(--color-primary);
     }
 
     #primary-menu>li.current-menu-item>a,
     #primary-menu>li.current_page_item>a {
         background-color: var(--color-primary);
         color: #ffffff;
+        border-color: var(--color-primary);
     }
 
     /* Desktop dropdowns */
@@ -1088,30 +1098,6 @@ ol {
     .mobile-menu-contact,
     .mobile-menu-social {
         display: none;
-    }
-
-    /* White navigation links in header-bottom context */
-    .header-bottom .main-navigation ul li a {
-        color: #ffffff;
-    }
-
-    .header-bottom .main-navigation ul li a:hover {
-        background-color: rgba(255, 255, 255, 0.15);
-        color: #ffffff;
-    }
-
-    /* Dropdown menus in header-bottom context */
-    .header-bottom .main-navigation ul ul {
-        background-color: var(--color-primary);
-    }
-
-    .header-bottom .main-navigation ul ul li a {
-        color: #ffffff;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .header-bottom .main-navigation ul ul li a:hover {
-        background-color: rgba(255, 255, 255, 0.15);
     }
 }
 
