@@ -2275,10 +2275,6 @@ select:focus-visible {
 /* ============================================
    Desktop CTA: Soita-painike valikkorivillä & Header Bottom
    ============================================ */
-.header-cta-call {
-    display: none; /* Piilota mobiilissa - .header-bottom is hidden by default on mobile */
-}
-
 /* Desktop CTA button - hidden on mobile, shown on desktop inside .header-bottom */
 .header-cta-call {
     display: none;
