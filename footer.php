@@ -35,7 +35,7 @@
         <div class="footer-bottom">
             <p>
                 &copy; <?php echo wp_date( 'Y' ); ?> <?php bloginfo( 'name' ); ?>.
-                <?php esc_html_e( 'Kaikki oikeudet pidätetään.', 'moderni-teal' ); ?>
+                <?php esc_html_e( '', 'moderni-teal' ); ?>
             </p>
         </div><!-- .footer-bottom -->
 

@@ -81,7 +81,7 @@ Moderni Teal is distributed under the terms of the GNU GPL.
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Kun body saa 'page-loaded' -luokan, sisältö näkyy */
@@ -95,7 +95,7 @@ body.page-leaving .site-content {
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.3s ease-in,
-                transform 0.3s ease-in;
+        transform 0.3s ease-in;
 }
 
 /* Saavutettavuus: kunnioita reduced-motion-asetusta */
@@ -105,7 +105,7 @@ body.page-leaving .site-content {
         transform: none !important;
         transition: none !important;
     }
-    
+
     body.page-leaving .site-content {
         transition: none !important;
     }
@@ -161,7 +161,7 @@ h6 {
     font-family: var(--font-heading);
     font-weight: 700;
     line-height: 1.2;
-    margin: 0 0 var(--spacing-md);
+
     color: var(--color-text);
 }
 
@@ -370,7 +370,8 @@ ol {
 .header-top {
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;;
+    margin-bottom: 10px;
+    ;
     align-items: center;
     padding: var(--spacing-lg) 0 var(--spacing-sm);
     transition: padding var(--transition);
@@ -464,8 +465,9 @@ ol {
     margin-bottom: -33px;
     border-radius: 10px;
     padding: var(--spacing-xs) var(--spacing-md) var(--spacing-sm);
-background-color: #fff;;
-border: 2px solid #ececec;
+    background-color: #fff;
+    ;
+    border: 2px solid #ececec;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -1158,7 +1160,8 @@ border: 2px solid #ececec;
 
 /* CTA Call Button */
 .header-cta {
-    display: none; /* Piilotetaan mobiilissa */
+    display: none;
+    /* Piilotetaan mobiilissa */
 }
 
 @media (min-width: 768px) {
@@ -1434,8 +1437,6 @@ border: 2px solid #ececec;
 .entry-content h4,
 .entry-content h5,
 .entry-content h6 {
-    margin-top: var(--spacing-2xl);
-    margin-bottom: var(--spacing-md);
 }
 
 .entry-content blockquote {

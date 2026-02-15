@@ -208,7 +208,7 @@
 
         function onScroll() {
             const isScrolled = header.classList.contains('scrolled');
-            
+
             if (!isScrolled && window.scrollY > SCROLL_THRESHOLD_DOWN) {
                 header.classList.add('scrolled');
                 if (topbar) topbar.classList.add('topbar-hidden');
