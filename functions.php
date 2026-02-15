@@ -124,6 +124,15 @@ function moderni_teal_scripts() {
         wp_get_theme()->get( 'Version' )
     );
 
+    // Sivuvaihto-transitiot
+    wp_enqueue_script(
+        'moderni-teal-page-transitions',
+        get_template_directory_uri() . '/assets/js/page-transitions.js',
+        array(),
+        wp_get_theme()->get( 'Version' ),
+        false // Ladataan <head>:issa jotta ei tule FOUC:ia
+    );
+
     // Navigaatio-JS
     wp_enqueue_script(
         'moderni-teal-navigation',

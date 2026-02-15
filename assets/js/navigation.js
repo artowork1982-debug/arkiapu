@@ -200,22 +200,21 @@
        ============================================= */
     const header = document.querySelector('.site-header');
     const topbar = document.querySelector('.site-topbar');
-    const threshold = 60; // pikselimäärä, jolloin shrink aktivoituu
+    const SCROLL_THRESHOLD_DOWN = 60;  // Aktivoi scrolled
+    const SCROLL_THRESHOLD_UP = 20;    // Deaktivoi scrolled (alempi arvo)
 
     if (header) {
         let ticking = false;
 
         function onScroll() {
-            if (window.scrollY > threshold) {
+            const isScrolled = header.classList.contains('scrolled');
+            
+            if (!isScrolled && window.scrollY > SCROLL_THRESHOLD_DOWN) {
                 header.classList.add('scrolled');
-                if (topbar) {
-                    topbar.classList.add('topbar-hidden');
-                }
-            } else {
+                if (topbar) topbar.classList.add('topbar-hidden');
+            } else if (isScrolled && window.scrollY < SCROLL_THRESHOLD_UP) {
                 header.classList.remove('scrolled');
-                if (topbar) {
-                    topbar.classList.remove('topbar-hidden');
-                }
+                if (topbar) topbar.classList.remove('topbar-hidden');
             }
             ticking = false;
         }
