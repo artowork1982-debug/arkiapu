@@ -2066,8 +2066,9 @@ select:focus-visible {
         padding-bottom: 80px !important;
     }
     
+    /* Body padding to prevent content from being hidden by fixed bottom bar */
     body {
-        padding-bottom: 70px;
+        padding-bottom: 80px;
     }
 }
 
