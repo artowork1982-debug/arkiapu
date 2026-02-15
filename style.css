@@ -1,0 +1,115 @@
+/* ============================================
+   Header — Keskitetty pystylogo + shrink
+   ============================================ */
+.site-header {
+    background-color: var(--color-bg);
+    border-bottom: 3px solid var(--color-primary);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition);
+}
+
+.site-header.scrolled {
+    box-shadow: var(--shadow-md);
+}
+
+/* --- Yläosa: keskitetty logo --- */
+.header-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-lg) 0 var(--spacing-sm);
+    transition: padding var(--transition);
+}
+
+.site-header.scrolled .header-top {
+    padding: var(--spacing-sm) 0 var(--spacing-xs);
+}
+
+.site-branding {
+    text-align: center;
+}
+
+.site-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.site-title a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.site-title a:hover {
+    color: var(--color-secondary);
+}
+
+.site-description {
+    font-size: 0.8rem;
+    color: var(--color-gray-500);
+    margin: var(--spacing-xs) 0 0;
+}
+
+/* Logo-wrapper — pystylogon koot ja skrollaus-shrink */
+.custom-logo-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.custom-logo-wrapper a {
+    display: block;
+    line-height: 0;
+    /* poistaa ylimääräisen tilan kuvan alta */
+}
+
+.custom-logo-wrapper .custom-logo {
+    max-height: 120px;
+    width: auto;
+    transition: max-height 0.4s ease, filter 0.3s ease;
+    object-fit: contain;
+}
+
+/* Pienennetty logo skrollatessa */
+.site-header.scrolled .custom-logo-wrapper .custom-logo {
+    max-height: 50px;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .custom-logo-wrapper .custom-logo {
+        max-height: 150px;
+    }
+
+    .site-header.scrolled .custom-logo-wrapper .custom-logo {
+        max-height: 55px;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .custom-logo-wrapper .custom-logo {
+        max-height: 180px;
+    }
+
+    .site-header.scrolled .custom-logo-wrapper .custom-logo {
+        max-height: 60px;
+    }
+}
+
+/* --- Alaosa: navigaatio keskitettynä --- */
+.header-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: var(--spacing-sm);
+    transition: padding var(--transition);
+}
+
+.site-header.scrolled .header-bottom {
+    padding-bottom: var(--spacing-xs);
+}
