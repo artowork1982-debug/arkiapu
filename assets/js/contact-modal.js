@@ -18,7 +18,8 @@
         if (e) e.preventDefault();
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
-        // Focus first input
+        // Focus first input after animation completes (modal transform transition is 0.3s)
+        // Small delay ensures modal is visible before focus
         setTimeout(function () {
             var firstInput = modal.querySelector('input, textarea');
             if (firstInput) firstInput.focus();
