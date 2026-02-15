@@ -118,12 +118,11 @@ if ( $description || is_customize_preview() ) :
                 </div>
             </nav><!-- #site-navigation -->
             
-            <!-- CTA-painike: Soita -->
-            <div class="header-cta">
-                <a href="tel:+358401837383" class="btn btn-cta-call">
-                    Soita
-                </a>
-            </div>
+            <!-- Desktop CTA - Soita painike oikeassa reunassa -->
+            <a href="tel:+358401234567" class="header-cta-call" aria-label="Soita meille">
+                <img src="https://titanarkiapu.fi/wp-content/uploads/2026/02/mobile-icon.svg" alt="" width="22" height="22" class="header-cta-call__icon">
+                <span class="header-cta-call__text">Soita meille</span>
+            </a>
         </div><!-- .header-bottom -->
 
     </div><!-- .container -->
