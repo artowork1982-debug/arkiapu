@@ -7,6 +7,14 @@
     'use strict';
 
     /* =============================================
+       Constants
+       ============================================= */
+    // Time to wait for menu animation before moving focus (matches CSS animation timing)
+    const MENU_OPEN_FOCUS_DELAY = 100;
+    // Submenu animation duration (should match CSS max-height transition)
+    const SUBMENU_ANIMATION_DURATION = 400;
+
+    /* =============================================
        Mobiilinavigaatio
        ============================================= */
     const toggle = document.querySelector('.menu-toggle');
@@ -41,7 +49,7 @@
                 if (firstFocusableElement) {
                     firstFocusableElement.focus();
                 }
-            }, 100);
+            }, MENU_OPEN_FOCUS_DELAY);
         }
         
         // Close menu function
@@ -133,7 +141,7 @@
                         
                         // Update focusable elements after opening submenu
                         if (item.classList.contains('submenu-open')) {
-                            setTimeout(updateFocusableElements, 400);
+                            setTimeout(updateFocusableElements, SUBMENU_ANIMATION_DURATION);
                         }
                     }
                 });

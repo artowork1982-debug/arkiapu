@@ -564,7 +564,7 @@ ul, ol {
 }
 
 #primary-menu .menu-item-has-children.submenu-open > .sub-menu {
-    max-height: 500px;
+    max-height: 1000px; /* Large enough for most submenus; parent has overflow handling */
 }
 
 #primary-menu .sub-menu li {
