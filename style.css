@@ -2280,7 +2280,7 @@ select:focus-visible {
 /* Desktopissa näytä .header-bottom ja CTA */
 @media (min-width: 768px) {
     .header-bottom {
-        /* Initial .header-bottom styles defined in header layout section above */
+        /* See "Alaosa: navigaatio keskitettynä" section in Header styles */
         justify-content: center;
         align-items: center;
         position: relative;
