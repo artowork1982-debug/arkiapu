@@ -2001,3 +2001,312 @@ select:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
 }
+/* ============================================
+   Mobiili: Kiinteä alanavigaatio (Soita + Viesti)
+   ============================================ */
+.mobile-bottom-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: var(--color-primary);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-bottom-bar__btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 0;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-bottom-bar__btn--call {
+    background: var(--color-primary);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.mobile-bottom-bar__btn--message {
+    background: var(--color-secondary);
+}
+
+.mobile-bottom-bar__btn:active {
+    opacity: 0.85;
+}
+
+.mobile-bottom-bar__icon {
+    width: 28px;
+    height: 28px;
+    display: block;
+    /* SVG-ikonit ovat valkoisia tai tarvitsevat filter */
+    filter: brightness(0) invert(1);
+}
+
+/* Desktop: piilota alanavigaatio */
+@media (min-width: 768px) {
+    .mobile-bottom-bar {
+        display: none !important;
+    }
+}
+
+/* Footerin padding-bottom mobiilissa jotta sisältö ei jää piiloon */
+@media (max-width: 767px) {
+    .site-footer {
+        padding-bottom: 80px !important;
+    }
+    
+    body {
+        padding-bottom: 70px;
+    }
+}
+
+/* ============================================
+   Ota yhteyttä -modal
+   ============================================ */
+.contact-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.contact-modal[aria-hidden="false"] {
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+}
+
+.contact-modal__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.contact-modal__content {
+    position: relative;
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    transform: translateY(30px) scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+}
+
+.contact-modal[aria-hidden="false"] .contact-modal__content {
+    transform: translateY(0) scale(1);
+}
+
+.contact-modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-gray-500);
+    padding: 4px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-modal__close:hover {
+    background: var(--color-gray-100);
+    color: var(--color-text);
+}
+
+.contact-modal__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 0.5rem;
+}
+
+.contact-modal__desc {
+    color: var(--color-text-light);
+    margin: 0 0 1.5rem;
+    font-size: 0.9rem;
+}
+
+.contact-modal__field {
+    margin-bottom: 1rem;
+}
+
+.contact-modal__field label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+    color: var(--color-text);
+}
+
+.contact-modal__field input,
+.contact-modal__field textarea {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--border-radius);
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+}
+
+.contact-modal__field input:focus,
+.contact-modal__field textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.contact-modal__field textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.contact-modal__submit {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+.contact-modal__submit:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.contact-modal__success {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.contact-modal__success-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--color-secondary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto 1rem;
+}
+
+/* Mobiilissa modal menee lähes koko ruudulle */
+@media (max-width: 767px) {
+    .contact-modal__content {
+        width: 95%;
+        max-height: 80vh;
+        padding: 1.5rem;
+        margin-bottom: 70px; /* alanavigaation tila */
+    }
+}
+
+/* Saavutettavuus */
+@media (prefers-reduced-motion: reduce) {
+    .contact-modal,
+    .contact-modal__content {
+        transition: none;
+    }
+}
+
+/* ============================================
+   Desktop CTA: Soita-painike valikkorivillä
+   ============================================ */
+.header-cta-call {
+    display: none; /* Piilota mobiilissa */
+}
+
+@media (min-width: 768px) {
+    .header-bottom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        /* Poista oikea padding jotta CTA menee kiinni reunaan */
+        padding-right: 0 !important;
+    }
+
+    .header-cta-call {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        padding: 0 1.2rem;
+        background: var(--color-secondary);
+        color: #fff !important;
+        text-decoration: none !important;
+        font-weight: 600;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        transition: background 0.2s ease;
+        /* Pyöristys vain oikeasta päästä, koska vasen puoli on kiinni navigaatiossa */
+        border-radius: 0 10px 10px 0;
+    }
+
+    .header-cta-call:hover {
+        background: var(--color-primary);
+    }
+
+    .header-cta-call__icon {
+        width: 22px;
+        height: 22px;
+        filter: brightness(0) invert(1);
+        flex-shrink: 0;
+    }
+}
+
+/* ============================================
+   Mobiilissa piilota valkoinen valikkoboksi
+   ============================================ */
+@media (max-width: 767px) {
+    .header-bottom {
+        display: none !important;
+    }
+}

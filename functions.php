@@ -142,6 +142,15 @@ function moderni_teal_scripts() {
         true
     );
 
+    // Ota yhteyttä -modal
+    wp_enqueue_script(
+        'moderni-teal-contact-modal',
+        get_template_directory_uri() . '/assets/js/contact-modal.js',
+        array(),
+        wp_get_theme()->get( 'Version' ),
+        true
+    );
+
     // Kommenttien vastausskripti
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
         wp_enqueue_script( 'comment-reply' );
