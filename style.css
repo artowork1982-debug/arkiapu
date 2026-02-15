@@ -360,7 +360,8 @@ ol {
     z-index: 1000;
     box-shadow: var(--shadow-sm);
     transition: box-shadow var(--transition);
-    will-change: box-shadow;
+    will-change: transform;
+    contain: layout;
 }
 
 .site-header.scrolled {
@@ -426,7 +427,7 @@ ol {
     width: auto;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
     object-fit: contain;
-    will-change: max-height;
+    will-change: transform;
     /* Smooth transition with better easing to prevent jitter */
 }
 
@@ -459,19 +460,14 @@ ol {
 
 /* --- Alaosa: navigaatio keskitettynä --- */
 .header-bottom {
-    /* Hidden on mobile, will be shown on desktop as container for desktop nav */
-    display: none;
+    /* Show on mobile but nav links are in overlay. On desktop shows nav + CTA */
+    display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: var(--spacing-sm);
     transition: padding var(--transition);
-    margin-bottom: var(--header-overlap);
-    border-radius: 10px;
-    padding: var(--spacing-xs) var(--spacing-md) var(--spacing-sm);
-    background-color: #fff;
-    border: 2px solid #ececec;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: relative;
+    /* No visual styling on mobile since nav is in overlay */
 }
 
 .site-header.scrolled .header-bottom {
@@ -689,21 +685,21 @@ ol {
 #primary-menu>li>a {
     display: block;
     padding: var(--spacing-md) var(--spacing-lg);
-    color: var(--color-primary);
-    background-color: #ffffff;
-    font-size: 2rem;
+    color: #ffffff;
+    background-color: transparent;
+    font-size: 1.25rem;
     font-weight: 600;
     text-align: center;
     text-decoration: none;
     position: relative;
     transition: all 0.3s ease;
     border-radius: var(--border-radius);
-    border: 2px solid var(--color-primary);
+    border: none;
 }
 
 #primary-menu>li>a:hover,
 #primary-menu>li>a:focus {
-    background: var(--color-primary);
+    background: rgba(255, 255, 255, 0.2);
     color: #ffffff;
     transform: translateX(5px);
 }
@@ -728,7 +724,7 @@ ol {
 /* Current menu item styling */
 #primary-menu>li.current-menu-item>a,
 #primary-menu>li.current_page_item>a {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
     position: relative;
 }
 
@@ -1006,9 +1002,17 @@ ol {
         display: none;
     }
 
-    /* Show .header-bottom on desktop - it contains the CTA button */
+    /* Show .header-bottom with proper styling on desktop */
     .header-bottom {
         display: flex !important;
+        margin-bottom: var(--header-overlap);
+        border-radius: 10px;
+        padding: var(--spacing-xs) var(--spacing-md) var(--spacing-sm);
+        background-color: #fff;
+        border: 2px solid #ececec;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        /* Poista oikea padding jotta CTA menee kiinni reunaan */
+        padding-right: 0 !important;
     }
 
     /* Reset mobile overlay styles for desktop */
@@ -1018,9 +1022,8 @@ ol {
         height: auto;
         pointer-events: auto;
         display: block !important;
-        /* Position nav to integrate with .header-bottom visually */
-        margin-bottom: var(--header-overlap);
-        /* Align with header-bottom overflow */
+        /* No margin as it's now inside .header-bottom */
+        margin-bottom: 0;
     }
 
     .main-navigation[aria-hidden="true"],
@@ -1046,12 +1049,11 @@ ol {
         display: block;
         padding: 0;
         min-height: auto;
-        /* Add the white box styling that was on .header-bottom */
-        background-color: #fff;
-        border: 2px solid #ececec;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        padding: var(--spacing-xs) var(--spacing-md) var(--spacing-sm);
+        /* No white box styling here as it's now on .header-bottom */
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
     }
 
     /* Desktop menu layout */
@@ -2277,17 +2279,13 @@ select:focus-visible {
     display: none; /* Piilota mobiilissa - .header-bottom is hidden by default on mobile */
 }
 
+/* Desktop CTA button - hidden on mobile, shown on desktop inside .header-bottom */
+.header-cta-call {
+    display: none;
+}
+
 /* Desktopissa näytä .header-bottom ja CTA */
 @media (min-width: 768px) {
-    .header-bottom {
-        /* See "Alaosa: navigaatio keskitettynä" section in Header styles */
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        /* Poista oikea padding jotta CTA menee kiinni reunaan */
-        padding-right: 0 !important;
-    }
-
     .header-cta-call {
         display: flex;
         align-items: center;
