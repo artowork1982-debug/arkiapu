@@ -368,12 +368,11 @@ ol {
     box-shadow: var(--shadow-md);
 }
 
-/* --- Yläosa: keskitetty logo --- */
+/* --- Top section: centered logo --- */
 .header-top {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
-    ;
     align-items: center;
     padding: var(--spacing-lg) 0 var(--spacing-sm);
     transition: padding var(--transition);
@@ -458,7 +457,7 @@ ol {
     }
 }
 
-/* --- Alaosa: navigaatio keskitettynä --- */
+/* --- Bottom section: centered navigation --- */
 .header-bottom {
     /* Show on mobile but nav links are in overlay. On desktop shows nav + CTA */
     display: flex;
@@ -491,7 +490,7 @@ ol {
     z-index: 1002;
 }
 
-/* Desktop: piilota */
+/* Desktop: hide mobile menu toggle */
 @media (min-width: 768px) {
     .mobile-menu {
         display: none;
@@ -1004,15 +1003,14 @@ ol {
 
     /* Show .header-bottom with proper styling on desktop */
     .header-bottom {
-        display: flex !important;
+        display: flex;
         margin-bottom: var(--header-overlap);
         border-radius: 10px;
         padding: var(--spacing-xs) var(--spacing-md) var(--spacing-sm);
+        padding-right: 0; /* Remove right padding so CTA button reaches the edge */
         background-color: #fff;
         border: 2px solid #ececec;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        /* Poista oikea padding jotta CTA menee kiinni reunaan */
-        padding-right: 0 !important;
     }
 
     /* Reset mobile overlay styles for desktop */
@@ -2072,7 +2070,7 @@ select:focus-visible {
     filter: brightness(0) invert(1);
 }
 
-/* Desktop: piilota alanavigaatio */
+/* Desktop: hide bottom navigation bar */
 @media (min-width: 768px) {
     .mobile-bottom-bar {
         display: none !important;
@@ -2280,7 +2278,7 @@ select:focus-visible {
     display: none;
 }
 
-/* Desktopissa näytä .header-bottom ja CTA */
+/* Show .header-bottom and CTA on desktop */
 @media (min-width: 768px) {
     .header-cta-call {
         display: flex;
