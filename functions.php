@@ -255,7 +255,7 @@ add_action( 'init', 'moderni_teal_remove_version' );
  */
 function moderni_teal_optimize_google_fonts() {
     ?>
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
     <noscript>
@@ -404,7 +404,7 @@ function moderni_teal_meta_description() {
     
     if ( $description ) {
         $description = wp_strip_all_tags( $description );
-        $description = substr( $description, 0, 160 );
+        $description = mb_substr( $description, 0, 160, 'UTF-8' );
         echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
     }
 }
