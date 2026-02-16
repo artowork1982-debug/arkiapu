@@ -205,15 +205,26 @@
 
     if (header) {
         let ticking = false;
+        let lastScrollY = 0;
+        let scrollDirection = 'down';
 
         function onScroll() {
             const currentScrollY = window.scrollY;
             const isScrolled = header.classList.contains('scrolled');
+            
+            // Determine scroll direction
+            if (currentScrollY > lastScrollY) {
+                scrollDirection = 'down';
+            } else if (currentScrollY < lastScrollY) {
+                scrollDirection = 'up';
+            }
+            lastScrollY = currentScrollY;
 
-            if (!isScrolled && currentScrollY > SCROLL_THRESHOLD_DOWN) {
+            // Add/remove scrolled class with hysteresis logic
+            if (!isScrolled && currentScrollY > SCROLL_THRESHOLD_DOWN && scrollDirection === 'down') {
                 header.classList.add('scrolled');
                 if (topbar) topbar.classList.add('topbar-hidden');
-            } else if (isScrolled && currentScrollY < SCROLL_THRESHOLD_UP) {
+            } else if (isScrolled && currentScrollY < SCROLL_THRESHOLD_UP && scrollDirection === 'up') {
                 header.classList.remove('scrolled');
                 if (topbar) topbar.classList.remove('topbar-hidden');
             }

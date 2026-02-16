@@ -95,4 +95,13 @@
             });
         });
     }
+
+    // Open modal from shortcode button
+    var shortcodeBtn = document.getElementById('contact-btn-shortcode');
+    if (shortcodeBtn) {
+        shortcodeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal(e);
+        });
+    }
 })();
