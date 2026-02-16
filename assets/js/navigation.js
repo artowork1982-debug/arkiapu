@@ -205,17 +205,38 @@
 
     if (header) {
         let ticking = false;
+        let lastScrollY = 0;
+        let scrolledLocked = false; // Estää nopean edestakaisin vaihdon
 
         function onScroll() {
+            const currentScrollY = window.scrollY;
             const isScrolled = header.classList.contains('scrolled');
 
-            if (!isScrolled && window.scrollY > SCROLL_THRESHOLD_DOWN) {
+            if (!isScrolled && currentScrollY > SCROLL_THRESHOLD_DOWN) {
+                // Tallenna headerin korkeus ennen muutosta
+                const headerHeightBefore = header.offsetHeight;
+
                 header.classList.add('scrolled');
                 if (topbar) topbar.classList.add('topbar-hidden');
-            } else if (isScrolled && window.scrollY < SCROLL_THRESHOLD_UP) {
+
+                // Kompensoi scroll-positiota headerin kutistumisen verran
+                // Tämä estää "hyppäyksen" joka aiheuttaisi scrollY:n putoamisen
+                requestAnimationFrame(() => {
+                    const headerHeightAfter = header.offsetHeight;
+                    const heightDiff = headerHeightBefore - headerHeightAfter;
+                    if (heightDiff > 0 && currentScrollY < headerHeightBefore) {
+                        // Lukitse scrolled-tila hetkeksi estääksemme välkkymisen
+                        scrolledLocked = true;
+                        setTimeout(() => { scrolledLocked = false; }, 300);
+                    }
+                });
+
+            } else if (isScrolled && currentScrollY < SCROLL_THRESHOLD_UP && !scrolledLocked) {
                 header.classList.remove('scrolled');
                 if (topbar) topbar.classList.remove('topbar-hidden');
             }
+
+            lastScrollY = currentScrollY;
             ticking = false;
         }
 
