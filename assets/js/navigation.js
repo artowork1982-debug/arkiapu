@@ -227,6 +227,9 @@
                     const heightDiff = headerHeightBefore - headerHeightAfter;
                     const currentScrollYAfterChange = window.scrollY; // Lue tuore scroll-positio
                     
+                    // Aktivoi lukitus vain jos ollaan lähellä sivun alkua
+                    // (currentScrollYAfterChange < headerHeightBefore tarkoittaa että headerin
+                    // koon muutos voi vaikuttaa scrollY:hyn ja aiheuttaa jitterin)
                     if (heightDiff > 0 && currentScrollYAfterChange < headerHeightBefore) {
                         // Lukitse scrolled-tila hetkeksi estääksemme välkkymisen
                         // Tyhjennä mahdollinen aikaisempi timeout
