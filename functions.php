@@ -186,7 +186,9 @@ add_action( 'wp_enqueue_scripts', 'moderni_teal_scripts' );
  */
 function moderni_teal_recaptcha_settings_init() {
     register_setting( 'moderni_teal_options', 'moderni_teal_recaptcha_site_key' );
-    register_setting( 'moderni_teal_options', 'moderni_teal_recaptcha_secret_key' );
+    register_setting( 'moderni_teal_options', 'moderni_teal_recaptcha_secret_key', array(
+        'sanitize_callback' => 'sanitize_text_field'
+    ) );
     register_setting( 'moderni_teal_options', 'moderni_teal_recaptcha_threshold', array(
         'type' => 'number',
         'default' => 0.5,
@@ -239,7 +241,7 @@ function moderni_teal_recaptcha_site_key_callback() {
 
 function moderni_teal_recaptcha_secret_key_callback() {
     $value = get_option( 'moderni_teal_recaptcha_secret_key', '' );
-    echo '<input type="text" name="moderni_teal_recaptcha_secret_key" value="' . esc_attr( $value ) . '" class="regular-text" placeholder="6Lc...">';
+    echo '<input type="password" name="moderni_teal_recaptcha_secret_key" value="' . esc_attr( $value ) . '" class="regular-text" placeholder="6Lc...">';
     echo '<p class="description">Pidä tämä avain turvassa! Älä jaa sitä julkisesti.</p>';
 }
 
@@ -752,7 +754,7 @@ function moderni_teal_handle_contact_form() {
             'body' => array(
                 'secret'   => $secret_key,
                 'response' => $recaptcha_token,
-                'remoteip' => $_SERVER['REMOTE_ADDR']
+                'remoteip' => sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
             )
         ) );
         
