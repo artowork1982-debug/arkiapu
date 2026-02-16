@@ -2357,3 +2357,20 @@ select:focus-visible {
         justify-content: center;
     }
 }
+
+/* ============================================
+   Google reCAPTCHA v3 Badge
+   ============================================ */
+.grecaptcha-badge {
+    visibility: hidden;
+}
+
+/* Jos haluat näyttää badgen, kommentoi yllä oleva ja käytä tätä: */
+/*
+.grecaptcha-badge {
+    position: fixed;
+    bottom: 80px;
+    right: 10px;
+    z-index: 999;
+}
+*/
