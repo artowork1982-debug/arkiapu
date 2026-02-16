@@ -675,7 +675,7 @@ function moderni_teal_handle_contact_form() {
     $to = 'info@titanarkiapu.fi';
 
     // Viestin otsikko
-    $subject = 'Yhteydenotto sivustolta: ' . $name;
+    $subject = sanitize_text_field( 'Yhteydenotto sivustolta: ' . $name );
 
     // Viestin sisältö
     $body  = "Uusi yhteydenotto sivustolta " . get_bloginfo( 'name' ) . "\n\n";
@@ -685,9 +685,10 @@ function moderni_teal_handle_contact_form() {
     $body .= "Viesti:\n{$message}\n";
 
     // Headers — Reply-To asetetaan lähettäjän osoitteeseen
+    $safe_name = str_replace( array( "\r", "\n", '"' ), '', $name );
     $headers = array(
         'Content-Type: text/plain; charset=UTF-8',
-        'Reply-To: "' . str_replace( '"', '', $name ) . '" <' . $email . '>',
+        'Reply-To: "' . $safe_name . '" <' . $email . '>',
     );
 
     // Lähetä sähköposti
