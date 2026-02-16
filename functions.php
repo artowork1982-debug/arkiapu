@@ -719,7 +719,7 @@ function moderni_teal_contact_button_shortcode( $atts ) {
     
     $icon_html = '';
     if ( $atts['icon'] === 'yes' ) {
-        $icon_html = '<img src="https://titanarkiapu.fi/wp-content/uploads/2026/02/email-ikoni.svg" alt="" width="22" height="22" class="contact-btn__icon">';
+        $icon_html = '<img src="https://titanarkiapu.fi/wp-content/uploads/2026/02/email-ikoni.svg" alt="" aria-hidden="true" width="22" height="22" class="contact-btn__icon">';
     }
     
     $extra_class = !empty( $atts['class'] ) ? ' ' . esc_attr( $atts['class'] ) : '';
