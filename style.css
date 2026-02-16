@@ -328,20 +328,9 @@ ol {
         padding: 0.375rem 0;
     }
 
-        .breadcrumbs {
-            padding-top: 10px!important;
-        }
-                .site-content {
-                    padding: 0px !important;
-                }
-
     .site-topbar__tagline {
         font-size: 0.7rem;
         letter-spacing: 0.1em;
-    }
-
-    .site-header.scrolled .header-top {
-        margin-bottom: -30px;  /* Mobile: smaller logo requires less compensation */
     }
 }
 
@@ -392,7 +381,6 @@ ol {
 
 .site-header.scrolled .header-top {
     padding: var(--spacing-xs) 0 0;
-    margin-bottom: -40px;  /* Desktop: Kompensoi tyhjää tilaa jonka scale() jättää */
 }
 
 .site-branding {
@@ -436,20 +424,19 @@ ol {
 .custom-logo-wrapper .custom-logo {
     max-height: 120px;
     width: auto;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
     object-fit: contain;
-    transform-origin: center center;
 }
+
 .mobile-logo-wrapper {
     display: flex;
     justify-content: center;
-    margin-bottom: 25px;;
+    margin-bottom: 25px;
 }
 
 .mobile-logo-wrapper a {
     display: block;
     line-height: 0;
-    /* poistaa ylimääräisen tilan kuvan alta */
 }
 
 .mobile-logo-wrapper .custom-logo {
@@ -457,13 +444,11 @@ ol {
     width: auto;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
     object-fit: contain;
-    will-change: transform;
-    /* Smooth transition with better easing to prevent jitter */
 }
 
-/* Pienennetty logo skrollatessa — käytetään transform: scale() jotta layout EI muutu */
+/* Pienennetty logo skrollatessa — käytetään max-height sen sijaan että scale() */
 .site-header.scrolled .custom-logo-wrapper .custom-logo {
-    transform: scale(0.42);  /* 50px / 120px ≈ 0.42 */
+    max-height: 50px;
 }
 
 /* Tablet */
@@ -473,7 +458,7 @@ ol {
     }
 
     .site-header.scrolled .custom-logo-wrapper .custom-logo {
-        transform: scale(0.37);  /* 55px / 150px ≈ 0.37 */
+        max-height: 55px;
     }
 }
 
@@ -484,7 +469,7 @@ ol {
     }
 
     .site-header.scrolled .custom-logo-wrapper .custom-logo {
-        transform: scale(0.33);  /* 60px / 180px ≈ 0.33 */
+        max-height: 60px;
     }
 }
 
@@ -1254,35 +1239,6 @@ ol {
 
 .btn-cta-call svg {
     flex-shrink: 0;
-}
-
-/* ============================================
-   Breadcrumbs
-   ============================================ */
-.breadcrumbs {
-    background-color: var(--color-gray-50);
-    padding: var(--spacing-sm) 0;
-    font-size: 0.875rem;
-    margin-bottom: var(--spacing-lg);
-        padding-top: 50px;
-}
-
-.breadcrumbs a {
-    color: var(--color-text-light);
-    transition: color var(--transition);
-}
-
-.breadcrumbs a:hover {
-    color: var(--color-primary);
-}
-
-.breadcrumbs .separator {
-    margin: 0 var(--spacing-xs);
-    color: var(--color-gray-400);
-}
-
-.breadcrumbs span:last-child {
-    color: var(--color-text);
 }
 
 /* ============================================
