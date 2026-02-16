@@ -205,7 +205,6 @@
 
     if (header) {
         let ticking = false;
-        let lastScrollY = 0;
         let scrolledLocked = false; // Estää nopean edestakaisin vaihdon
 
         function onScroll() {
@@ -236,7 +235,6 @@
                 if (topbar) topbar.classList.remove('topbar-hidden');
             }
 
-            lastScrollY = currentScrollY;
             ticking = false;
         }
 
