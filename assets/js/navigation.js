@@ -42,6 +42,8 @@
             nav.setAttribute('aria-hidden', 'false');
             toggle.setAttribute('aria-expanded', 'true');
             body.style.overflow = 'hidden';
+            body.style.overflowX = 'hidden';
+            body.classList.add('menu-open');
 
             // Add staggered animation to menu items
             setTimeout(() => {
@@ -57,6 +59,8 @@
             nav.setAttribute('aria-hidden', 'true');
             toggle.setAttribute('aria-expanded', 'false');
             body.style.overflow = '';
+            body.style.overflowX = '';
+            body.classList.remove('menu-open');
 
             // Close all open submenus
             const openSubmenus = nav.querySelectorAll('.menu-item-has-children.submenu-open');
@@ -183,6 +187,8 @@
                         nav.setAttribute('aria-hidden', 'true');
                         toggle.setAttribute('aria-expanded', 'false');
                         body.style.overflow = '';
+                        body.style.overflowX = '';
+                        body.classList.remove('menu-open');
                     }
 
                     // Close all submenus
