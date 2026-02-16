@@ -339,6 +339,10 @@ ol {
         font-size: 0.7rem;
         letter-spacing: 0.1em;
     }
+
+    .site-header.scrolled .header-top {
+        margin-bottom: -30px;
+    }
 }
 
 /* Saavutettavuus: poista animaatiot */
@@ -387,7 +391,8 @@ ol {
 }
 
 .site-header.scrolled .header-top {
-    padding: var(--spacing-sm) 0 var(--spacing-xs);
+    padding: var(--spacing-xs) 0 0;
+    margin-bottom: -40px;  /* Kompensoi tyhjää tilaa jonka scale() jättää */
 }
 
 .site-branding {
@@ -426,16 +431,14 @@ ol {
 .custom-logo-wrapper a {
     display: block;
     line-height: 0;
-    /* poistaa ylimääräisen tilan kuvan alta */
 }
 
 .custom-logo-wrapper .custom-logo {
     max-height: 120px;
     width: auto;
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
     object-fit: contain;
-    will-change: transform;
-    /* Smooth transition with better easing to prevent jitter */
+    transform-origin: center center;
 }
 .mobile-logo-wrapper {
     display: flex;
@@ -458,9 +461,9 @@ ol {
     /* Smooth transition with better easing to prevent jitter */
 }
 
-/* Pienennetty logo skrollatessa */
+/* Pienennetty logo skrollatessa — käytetään transform: scale() jotta layout EI muutu */
 .site-header.scrolled .custom-logo-wrapper .custom-logo {
-    max-height: 50px;
+    transform: scale(0.42);  /* 50px / 120px ≈ 0.42 */
 }
 
 /* Tablet */
@@ -470,7 +473,7 @@ ol {
     }
 
     .site-header.scrolled .custom-logo-wrapper .custom-logo {
-        max-height: 55px;
+        transform: scale(0.37);  /* 55px / 150px ≈ 0.37 */
     }
 }
 
@@ -481,7 +484,7 @@ ol {
     }
 
     .site-header.scrolled .custom-logo-wrapper .custom-logo {
-        max-height: 60px;
+        transform: scale(0.33);  /* 60px / 180px ≈ 0.33 */
     }
 }
 
@@ -498,7 +501,7 @@ ol {
 }
 
 .site-header.scrolled .header-bottom {
-    padding-bottom: var(--spacing-xs);
+    padding-bottom: 0;
 }
 
 /* ============================================
