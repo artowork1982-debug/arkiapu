@@ -377,12 +377,14 @@ ol {
     align-items: center;
     padding: var(--spacing-lg) 0 var(--spacing-sm);
     transition: padding var(--transition);
-    min-height: 160px; /* Prevents layout shift when logo shrinks */
+    min-height: 160px;
+    /* Prevents layout shift when logo shrinks */
 }
 
 .site-header.scrolled .header-top {
     padding: var(--spacing-xs) 0 0;
-    min-height: 80px; /* Fixed height when scrolled */
+    min-height: 80px;
+    /* Fixed height when scrolled */
 }
 
 .site-branding {
@@ -428,7 +430,8 @@ ol {
     width: auto;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
     object-fit: contain;
-    display: block; /* Ensures precise layout */
+    display: block;
+    /* Ensures precise layout */
 }
 
 .mobile-logo-wrapper {
@@ -447,7 +450,8 @@ ol {
     width: auto;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
     object-fit: contain;
-    display: block; /* Ensures precise layout */
+    display: block;
+    /* Ensures precise layout */
 }
 
 /* Pienennetty logo skrollatessa — käytetään max-height sen sijaan että scale() */
@@ -490,7 +494,7 @@ ol {
 }
 
 .site-header.scrolled .header-bottom {
-    padding-bottom: 0;
+
 }
 
 /* ============================================
@@ -2313,6 +2317,7 @@ select:focus-visible {
         flex-shrink: 0;
     }
 }
+
 /* ============================================
    Contact Button Shortcode
    ============================================ */
@@ -2320,12 +2325,12 @@ select:focus-visible {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.8rem 1.5rem;
-    background: var(--color-secondary);
+    padding: 0rem 1rem;
+    background: var(--color-primary);
     color: #fff !important;
     border: none;
-    border-radius: 50px;
-    font-weight: 600;
+    border-radius: 30px;
+    font-weight: 800;
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
