@@ -377,10 +377,12 @@ ol {
     align-items: center;
     padding: var(--spacing-lg) 0 var(--spacing-sm);
     transition: padding var(--transition);
+    min-height: 160px; /* Prevents layout shift when logo shrinks */
 }
 
 .site-header.scrolled .header-top {
     padding: var(--spacing-xs) 0 0;
+    min-height: 80px; /* Fixed height when scrolled */
 }
 
 .site-branding {
@@ -426,6 +428,7 @@ ol {
     width: auto;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
     object-fit: contain;
+    display: block; /* Ensures precise layout */
 }
 
 .mobile-logo-wrapper {
@@ -444,6 +447,7 @@ ol {
     width: auto;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
     object-fit: contain;
+    display: block; /* Ensures precise layout */
 }
 
 /* Pienennetty logo skrollatessa — käytetään max-height sen sijaan että scale() */
@@ -2307,5 +2311,49 @@ select:focus-visible {
         width: 35px;
         height: 35px;
         flex-shrink: 0;
+    }
+}
+/* ============================================
+   Contact Button Shortcode
+   ============================================ */
+.btn-contact-shortcode {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background: var(--color-secondary);
+    color: #fff !important;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(98, 183, 128, 0.4);
+    text-decoration: none;
+}
+
+.btn-contact-shortcode:hover {
+    background: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(1, 89, 81, 0.4);
+    color: #fff !important;
+}
+
+.btn-contact-shortcode:active {
+    transform: translateY(0);
+}
+
+.btn-contact-shortcode .contact-btn__icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+}
+
+/* Mobile - full width */
+@media (max-width: 767px) {
+    .btn-contact-shortcode {
+        width: 100%;
+        justify-content: center;
     }
 }
