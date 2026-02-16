@@ -185,7 +185,9 @@ add_action( 'wp_enqueue_scripts', 'moderni_teal_scripts' );
  * reCAPTCHA v3 - Admin Settings
  */
 function moderni_teal_recaptcha_settings_init() {
-    register_setting( 'moderni_teal_options', 'moderni_teal_recaptcha_site_key' );
+    register_setting( 'moderni_teal_options', 'moderni_teal_recaptcha_site_key', array(
+        'sanitize_callback' => 'sanitize_text_field'
+    ) );
     register_setting( 'moderni_teal_options', 'moderni_teal_recaptcha_secret_key', array(
         'sanitize_callback' => 'sanitize_text_field'
     ) );
@@ -229,8 +231,12 @@ function moderni_teal_recaptcha_settings_init() {
 add_action( 'admin_init', 'moderni_teal_recaptcha_settings_init' );
 
 function moderni_teal_recaptcha_section_callback() {
+    $domain = parse_url( home_url(), PHP_URL_HOST );
+    if ( empty( $domain ) ) {
+        $domain = 'your-domain.com';
+    }
     echo '<p>Hanki API-avaimet osoitteesta: <a href="https://www.google.com/recaptcha/admin" target="_blank">Google reCAPTCHA Admin</a></p>';
-    echo '<p>Valitse <strong>reCAPTCHA v3</strong> ja lisää domain: <code>' . esc_html( parse_url( home_url(), PHP_URL_HOST ) ) . '</code></p>';
+    echo '<p>Valitse <strong>reCAPTCHA v3</strong> ja lisää domain: <code>' . esc_html( $domain ) . '</code></p>';
     echo '<p><strong>Huom:</strong> Kynnysarvo 0.5 on suositeltu. Mitä korkeampi arvo, sitä tiukempi suodatus.</p>';
 }
 
@@ -749,13 +755,23 @@ function moderni_teal_handle_contact_form() {
         $recaptcha_token = sanitize_text_field( $_POST['recaptcha_token'] );
         $threshold = floatval( get_option( 'moderni_teal_recaptcha_threshold', 0.5 ) );
         
+        // Hae ja validoi IP-osoite
+        $remote_ip = isset( $_SERVER['REMOTE_ADDR'] ) ? wp_unslash( $_SERVER['REMOTE_ADDR'] ) : '';
+        $remote_ip = filter_var( $remote_ip, FILTER_VALIDATE_IP );
+        
         // Lähetä token Googlen API:lle validointia varten
+        $recaptcha_body = array(
+            'secret'   => $secret_key,
+            'response' => $recaptcha_token,
+        );
+        
+        // Lisää IP-osoite vain jos se on validi
+        if ( $remote_ip !== false ) {
+            $recaptcha_body['remoteip'] = $remote_ip;
+        }
+        
         $recaptcha_response = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', array(
-            'body' => array(
-                'secret'   => $secret_key,
-                'response' => $recaptcha_token,
-                'remoteip' => sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
-            )
+            'body' => $recaptcha_body
         ) );
         
         if ( ! is_wp_error( $recaptcha_response ) ) {
