@@ -341,7 +341,7 @@ ol {
     }
 
     .site-header.scrolled .header-top {
-        margin-bottom: -30px;
+        margin-bottom: -30px;  /* Mobile: smaller logo requires less compensation */
     }
 }
 
@@ -392,7 +392,7 @@ ol {
 
 .site-header.scrolled .header-top {
     padding: var(--spacing-xs) 0 0;
-    margin-bottom: -40px;  /* Kompensoi tyhjää tilaa jonka scale() jättää */
+    margin-bottom: -40px;  /* Desktop: Kompensoi tyhjää tilaa jonka scale() jättää */
 }
 
 .site-branding {
