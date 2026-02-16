@@ -150,6 +150,12 @@ function moderni_teal_scripts() {
         wp_get_theme()->get( 'Version' ),
         true
     );
+    
+    // Lisää AJAX URL ja nonce JavaScriptille
+    wp_localize_script( 'moderni-teal-contact-modal', 'moderniTealContact', array(
+        'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+        'nonce'   => wp_create_nonce( 'moderni_teal_contact' ),
+    ) );
 
     // Kommenttien vastausskripti
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -651,10 +657,10 @@ function moderni_teal_handle_contact_form() {
     }
 
     // Puhdista syötteet
-    $name    = sanitize_text_field( $_POST['name'] ?? '' );
-    $email   = sanitize_email( $_POST['email'] ?? '' );
-    $phone   = sanitize_text_field( $_POST['phone'] ?? '-' );
-    $message = sanitize_textarea_field( $_POST['message'] ?? '' );
+    $name    = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '';
+    $email   = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
+    $phone   = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '-';
+    $message = isset( $_POST['message'] ) ? sanitize_textarea_field( $_POST['message'] ) : '';
 
     // Validoi pakolliset kentät
     if ( empty( $name ) || empty( $email ) || empty( $message ) ) {
@@ -681,7 +687,7 @@ function moderni_teal_handle_contact_form() {
     // Headers — Reply-To asetetaan lähettäjän osoitteeseen
     $headers = array(
         'Content-Type: text/plain; charset=UTF-8',
-        'Reply-To: ' . $name . ' <' . $email . '>',
+        'Reply-To: "' . str_replace( '"', '', $name ) . '" <' . $email . '>',
     );
 
     // Lähetä sähköposti
@@ -696,13 +702,3 @@ function moderni_teal_handle_contact_form() {
 add_action( 'wp_ajax_moderni_teal_contact', 'moderni_teal_handle_contact_form' );
 add_action( 'wp_ajax_nopriv_moderni_teal_contact', 'moderni_teal_handle_contact_form' );
 
-/**
- * Lisää AJAX URL ja nonce JavaScriptille
- */
-function moderni_teal_contact_localize() {
-    wp_localize_script( 'moderni-teal-contact-modal', 'moderniTealContact', array(
-        'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-        'nonce'   => wp_create_nonce( 'moderni_teal_contact' ),
-    ) );
-}
-add_action( 'wp_enqueue_scripts', 'moderni_teal_contact_localize' );

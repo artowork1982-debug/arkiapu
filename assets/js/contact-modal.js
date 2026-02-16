@@ -52,6 +52,12 @@
         form.addEventListener('submit', function (e) {
             e.preventDefault();
 
+            // Tarkista että AJAX-konfiguraatio on saatavilla
+            if (typeof moderniTealContact === 'undefined') {
+                alert('Konfigurointivirhe. Päivitä sivu ja yritä uudelleen.');
+                return;
+            }
+
             var submitBtn = form.querySelector('.contact-modal__submit');
             var originalText = submitBtn.textContent;
 
@@ -76,7 +82,8 @@
                     setTimeout(closeModal, 3000);
                 } else {
                     // Virhe — näytä virheilmoitus
-                    alert(data.data.message || 'Viestin lähetys epäonnistui.');
+                    var errorMsg = (data && data.data && data.data.message) ? data.data.message : 'Viestin lähetys epäonnistui.';
+                    alert(errorMsg);
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalText;
                 }
