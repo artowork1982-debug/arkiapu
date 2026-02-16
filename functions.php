@@ -640,3 +640,69 @@ function moderni_teal_schema_markup() {
     }
 }
 add_action( 'wp_head', 'moderni_teal_schema_markup', 4 );
+
+/**
+ * Yhteydenottolomakkeen AJAX-käsittelijä
+ */
+function moderni_teal_handle_contact_form() {
+    // Tarkista nonce-turvakoodi
+    if ( ! isset( $_POST['contact_nonce'] ) || ! wp_verify_nonce( $_POST['contact_nonce'], 'moderni_teal_contact' ) ) {
+        wp_send_json_error( array( 'message' => 'Turvatarkistus epäonnistui.' ) );
+    }
+
+    // Puhdista syötteet
+    $name    = sanitize_text_field( $_POST['name'] ?? '' );
+    $email   = sanitize_email( $_POST['email'] ?? '' );
+    $phone   = sanitize_text_field( $_POST['phone'] ?? '-' );
+    $message = sanitize_textarea_field( $_POST['message'] ?? '' );
+
+    // Validoi pakolliset kentät
+    if ( empty( $name ) || empty( $email ) || empty( $message ) ) {
+        wp_send_json_error( array( 'message' => 'Täytä kaikki pakolliset kentät.' ) );
+    }
+
+    if ( ! is_email( $email ) ) {
+        wp_send_json_error( array( 'message' => 'Virheellinen sähköpostiosoite.' ) );
+    }
+
+    // Vastaanottajan sähköposti
+    $to = 'info@titanarkiapu.fi';
+
+    // Viestin otsikko
+    $subject = 'Yhteydenotto sivustolta: ' . $name;
+
+    // Viestin sisältö
+    $body  = "Uusi yhteydenotto sivustolta " . get_bloginfo( 'name' ) . "\n\n";
+    $body .= "Nimi: {$name}\n";
+    $body .= "Sähköposti: {$email}\n";
+    $body .= "Puhelin: {$phone}\n\n";
+    $body .= "Viesti:\n{$message}\n";
+
+    // Headers — Reply-To asetetaan lähettäjän osoitteeseen
+    $headers = array(
+        'Content-Type: text/plain; charset=UTF-8',
+        'Reply-To: ' . $name . ' <' . $email . '>',
+    );
+
+    // Lähetä sähköposti
+    $sent = wp_mail( $to, $subject, $body, $headers );
+
+    if ( $sent ) {
+        wp_send_json_success( array( 'message' => 'Viesti lähetetty onnistuneesti!' ) );
+    } else {
+        wp_send_json_error( array( 'message' => 'Viestin lähetys epäonnistui. Yritä myöhemmin.' ) );
+    }
+}
+add_action( 'wp_ajax_moderni_teal_contact', 'moderni_teal_handle_contact_form' );
+add_action( 'wp_ajax_nopriv_moderni_teal_contact', 'moderni_teal_handle_contact_form' );
+
+/**
+ * Lisää AJAX URL ja nonce JavaScriptille
+ */
+function moderni_teal_contact_localize() {
+    wp_localize_script( 'moderni-teal-contact-modal', 'moderniTealContact', array(
+        'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+        'nonce'   => wp_create_nonce( 'moderni_teal_contact' ),
+    ) );
+}
+add_action( 'wp_enqueue_scripts', 'moderni_teal_contact_localize' );

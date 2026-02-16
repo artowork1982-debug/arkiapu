@@ -67,6 +67,7 @@
         <h2 class="contact-modal__title">Ota yhteyttä</h2>
         <p class="contact-modal__desc">Täytä lomake ja palaamme sinulle mahdollisimman pian.</p>
         <form class="contact-modal__form" id="contact-modal-form">
+            <?php wp_nonce_field( 'moderni_teal_contact', 'contact_nonce' ); ?>
             <div class="contact-modal__field">
                 <label for="contact-name">Nimi *</label>
                 <input type="text" id="contact-name" name="name" required placeholder="Nimesi">
