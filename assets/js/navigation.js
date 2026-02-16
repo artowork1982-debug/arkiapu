@@ -200,52 +200,20 @@
        ============================================= */
     const header = document.querySelector('.site-header');
     const topbar = document.querySelector('.site-topbar');
-    const SCROLL_THRESHOLD_DOWN = 60;  // Aktivoi scrolled
-    const SCROLL_THRESHOLD_UP = 20;    // Deaktivoi scrolled (alempi arvo)
-    const SCROLL_LOCK_DURATION_MS = 300; // Lukitusaika välkkymisen estämiseksi
+    const SCROLL_THRESHOLD_DOWN = 60;
+    const SCROLL_THRESHOLD_UP = 20;
 
     if (header) {
         let ticking = false;
-        let scrolledLocked = false; // Estää nopean edestakaisin vaihdon
-        let scrollLockTimeout = null; // Tallentaa timeout ID:n
 
         function onScroll() {
             const currentScrollY = window.scrollY;
             const isScrolled = header.classList.contains('scrolled');
 
             if (!isScrolled && currentScrollY > SCROLL_THRESHOLD_DOWN) {
-                // Tallenna headerin korkeus ennen muutosta
-                const headerHeightBefore = header.offsetHeight;
-
                 header.classList.add('scrolled');
                 if (topbar) topbar.classList.add('topbar-hidden');
-
-                // Kompensoi scroll-positiota headerin kutistumisen verran
-                // Tämä estää "hyppäyksen" joka aiheuttaisi scrollY:n putoamisen
-                requestAnimationFrame(() => {
-                    const headerHeightAfter = header.offsetHeight;
-                    const heightDiff = headerHeightBefore - headerHeightAfter;
-                    const currentScrollYAfterChange = window.scrollY; // Lue tuore scroll-positio
-                    
-                    // Aktivoi lukitus vain jos ollaan lähellä sivun alkua
-                    // (currentScrollYAfterChange < headerHeightBefore tarkoittaa että headerin
-                    // koon muutos voi vaikuttaa scrollY:hyn ja aiheuttaa jitterin)
-                    if (heightDiff > 0 && currentScrollYAfterChange < headerHeightBefore) {
-                        // Lukitse scrolled-tila hetkeksi estääksemme välkkymisen
-                        // Tyhjennä mahdollinen aikaisempi timeout
-                        if (scrollLockTimeout) {
-                            clearTimeout(scrollLockTimeout);
-                        }
-                        
-                        scrolledLocked = true;
-                        scrollLockTimeout = setTimeout(() => { 
-                            scrolledLocked = false;
-                            scrollLockTimeout = null;
-                        }, SCROLL_LOCK_DURATION_MS);
-                    }
-                });
-
-            } else if (isScrolled && currentScrollY < SCROLL_THRESHOLD_UP && !scrolledLocked) {
+            } else if (isScrolled && currentScrollY < SCROLL_THRESHOLD_UP) {
                 header.classList.remove('scrolled');
                 if (topbar) topbar.classList.remove('topbar-hidden');
             }
@@ -260,7 +228,6 @@
             }
         }, { passive: true });
 
-        // Tarkista heti ladattaessa (esim. sivu ladataan keskeltä)
         onScroll();
     }
 })();
