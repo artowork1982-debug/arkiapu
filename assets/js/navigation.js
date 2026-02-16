@@ -202,6 +202,7 @@
     const topbar = document.querySelector('.site-topbar');
     const SCROLL_THRESHOLD_DOWN = 60;  // Aktivoi scrolled
     const SCROLL_THRESHOLD_UP = 20;    // Deaktivoi scrolled (alempi arvo)
+    const SCROLL_LOCK_DURATION_MS = 300; // Lukitusaika välkkymisen estämiseksi
 
     if (header) {
         let ticking = false;
@@ -226,7 +227,7 @@
                     if (heightDiff > 0 && currentScrollY < headerHeightBefore) {
                         // Lukitse scrolled-tila hetkeksi estääksemme välkkymisen
                         scrolledLocked = true;
-                        setTimeout(() => { scrolledLocked = false; }, 300);
+                        setTimeout(() => { scrolledLocked = false; }, SCROLL_LOCK_DURATION_MS);
                     }
                 });
 
