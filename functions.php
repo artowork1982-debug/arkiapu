@@ -157,12 +157,97 @@ function moderni_teal_scripts() {
         'nonce'   => wp_create_nonce( 'moderni_teal_contact' ),
     ) );
 
+    // Lataa reCAPTCHA v3 -skripti jos avaimet on asetettu
+    $site_key = get_option( 'moderni_teal_recaptcha_site_key', '' );
+    if ( ! empty( $site_key ) ) {
+        wp_enqueue_script(
+            'google-recaptcha',
+            'https://www.google.com/recaptcha/api.js?render=' . esc_attr( $site_key ),
+            array(),
+            null,
+            true
+        );
+        
+        // Välitä site key JavaScriptille
+        wp_localize_script( 'moderni-teal-contact-modal', 'moderniTealRecaptcha', array(
+            'siteKey' => $site_key,
+        ) );
+    }
+
     // Kommenttien vastausskripti
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
         wp_enqueue_script( 'comment-reply' );
     }
 }
 add_action( 'wp_enqueue_scripts', 'moderni_teal_scripts' );
+
+/**
+ * reCAPTCHA v3 - Admin Settings
+ */
+function moderni_teal_recaptcha_settings_init() {
+    register_setting( 'moderni_teal_options', 'moderni_teal_recaptcha_site_key' );
+    register_setting( 'moderni_teal_options', 'moderni_teal_recaptcha_secret_key' );
+    register_setting( 'moderni_teal_options', 'moderni_teal_recaptcha_threshold', array(
+        'type' => 'number',
+        'default' => 0.5,
+        'sanitize_callback' => 'floatval'
+    ) );
+    
+    add_settings_section(
+        'moderni_teal_recaptcha_section',
+        'Google reCAPTCHA v3 Asetukset',
+        'moderni_teal_recaptcha_section_callback',
+        'general'
+    );
+    
+    add_settings_field(
+        'moderni_teal_recaptcha_site_key',
+        'reCAPTCHA Site Key',
+        'moderni_teal_recaptcha_site_key_callback',
+        'general',
+        'moderni_teal_recaptcha_section'
+    );
+    
+    add_settings_field(
+        'moderni_teal_recaptcha_secret_key',
+        'reCAPTCHA Secret Key',
+        'moderni_teal_recaptcha_secret_key_callback',
+        'general',
+        'moderni_teal_recaptcha_section'
+    );
+    
+    add_settings_field(
+        'moderni_teal_recaptcha_threshold',
+        'Hyväksymiskynnys (0.0 - 1.0)',
+        'moderni_teal_recaptcha_threshold_callback',
+        'general',
+        'moderni_teal_recaptcha_section'
+    );
+}
+add_action( 'admin_init', 'moderni_teal_recaptcha_settings_init' );
+
+function moderni_teal_recaptcha_section_callback() {
+    echo '<p>Hanki API-avaimet osoitteesta: <a href="https://www.google.com/recaptcha/admin" target="_blank">Google reCAPTCHA Admin</a></p>';
+    echo '<p>Valitse <strong>reCAPTCHA v3</strong> ja lisää domain: <code>' . esc_html( parse_url( home_url(), PHP_URL_HOST ) ) . '</code></p>';
+    echo '<p><strong>Huom:</strong> Kynnysarvo 0.5 on suositeltu. Mitä korkeampi arvo, sitä tiukempi suodatus.</p>';
+}
+
+function moderni_teal_recaptcha_site_key_callback() {
+    $value = get_option( 'moderni_teal_recaptcha_site_key', '' );
+    echo '<input type="text" name="moderni_teal_recaptcha_site_key" value="' . esc_attr( $value ) . '" class="regular-text" placeholder="6Lc...">';
+}
+
+function moderni_teal_recaptcha_secret_key_callback() {
+    $value = get_option( 'moderni_teal_recaptcha_secret_key', '' );
+    echo '<input type="text" name="moderni_teal_recaptcha_secret_key" value="' . esc_attr( $value ) . '" class="regular-text" placeholder="6Lc...">';
+    echo '<p class="description">Pidä tämä avain turvassa! Älä jaa sitä julkisesti.</p>';
+}
+
+function moderni_teal_recaptcha_threshold_callback() {
+    $value = get_option( 'moderni_teal_recaptcha_threshold', 0.5 );
+    echo '<input type="number" name="moderni_teal_recaptcha_threshold" value="' . esc_attr( $value ) . '" step="0.1" min="0" max="1" style="width: 80px;">';
+    echo '<p class="description">Suositus: 0.5 (mitä korkeampi, sitä tiukempi)</p>';
+}
 
 /**
  * Lisää preconnect Google Fontsille
@@ -654,6 +739,37 @@ function moderni_teal_handle_contact_form() {
     // Tarkista nonce-turvakoodi
     if ( ! isset( $_POST['contact_nonce'] ) || ! wp_verify_nonce( $_POST['contact_nonce'], 'moderni_teal_contact' ) ) {
         wp_send_json_error( array( 'message' => 'Turvatarkistus epäonnistui.' ) );
+    }
+
+    // reCAPTCHA v3 -validointi (jos käytössä)
+    $secret_key = get_option( 'moderni_teal_recaptcha_secret_key', '' );
+    if ( ! empty( $secret_key ) && isset( $_POST['recaptcha_token'] ) ) {
+        $recaptcha_token = sanitize_text_field( $_POST['recaptcha_token'] );
+        $threshold = floatval( get_option( 'moderni_teal_recaptcha_threshold', 0.5 ) );
+        
+        // Lähetä token Googlen API:lle validointia varten
+        $recaptcha_response = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', array(
+            'body' => array(
+                'secret'   => $secret_key,
+                'response' => $recaptcha_token,
+                'remoteip' => $_SERVER['REMOTE_ADDR']
+            )
+        ) );
+        
+        if ( ! is_wp_error( $recaptcha_response ) ) {
+            $recaptcha_data = json_decode( wp_remote_retrieve_body( $recaptcha_response ), true );
+            
+            // Tarkista että validointi onnistui ja pisteet ovat riittävät
+            if ( ! isset( $recaptcha_data['success'] ) || ! $recaptcha_data['success'] ) {
+                wp_send_json_error( array( 'message' => 'Roskapostisuodatus epäonnistui. Yritä uudelleen.' ) );
+            }
+            
+            if ( ! isset( $recaptcha_data['score'] ) || $recaptcha_data['score'] < $threshold ) {
+                // Pisteet liian matalat → todennäköisesti botti
+                error_log( 'reCAPTCHA: Matala pistemäärä: ' . $recaptcha_data['score'] );
+                wp_send_json_error( array( 'message' => 'Roskapostisuodatus esti lähetyksen.' ) );
+            }
+        }
     }
 
     // Puhdista syötteet

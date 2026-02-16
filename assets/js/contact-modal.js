@@ -65,34 +65,59 @@
             submitBtn.disabled = true;
             submitBtn.textContent = 'Lähetetään...';
 
-            var formData = new FormData(form);
-            formData.append('action', 'moderni_teal_contact');
+            // Funktio joka lähettää lomakkeen
+            function submitForm(recaptchaToken) {
+                var formData = new FormData(form);
+                formData.append('action', 'moderni_teal_contact');
+                
+                // Lisää reCAPTCHA-token jos saatavilla
+                if (recaptchaToken) {
+                    formData.append('recaptcha_token', recaptchaToken);
+                }
 
-            fetch(moderniTealContact.ajaxUrl, {
-                method: 'POST',
-                body: formData,
-                credentials: 'same-origin'
-            })
-            .then(function (response) { return response.json(); })
-            .then(function (data) {
-                if (data.success) {
-                    // Onnistui — näytä kiitos-viesti
-                    form.style.display = 'none';
-                    if (successMsg) successMsg.style.display = 'block';
-                    setTimeout(closeModal, 3000);
-                } else {
-                    // Virhe — näytä virheilmoitus
-                    var errorMsg = (data && data.data && data.data.message) ? data.data.message : 'Viestin lähetys epäonnistui.';
-                    alert(errorMsg);
+                fetch(moderniTealContact.ajaxUrl, {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin'
+                })
+                .then(function (response) { return response.json(); })
+                .then(function (data) {
+                    if (data.success) {
+                        // Onnistui — näytä kiitos-viesti
+                        form.style.display = 'none';
+                        if (successMsg) successMsg.style.display = 'block';
+                        setTimeout(closeModal, 3000);
+                    } else {
+                        // Virhe — näytä virheilmoitus
+                        var errorMsg = (data && data.data && data.data.message) ? data.data.message : 'Viestin lähetys epäonnistui.';
+                        alert(errorMsg);
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }
+                })
+                .catch(function () {
+                    alert('Yhteysvirhe. Tarkista internet-yhteys ja yritä uudelleen.');
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalText;
-                }
-            })
-            .catch(function () {
-                alert('Yhteysvirhe. Tarkista internet-yhteys ja yritä uudelleen.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
-            });
+                });
+            }
+
+            // Jos reCAPTCHA on käytössä, hae token ensin
+            if (typeof moderniTealRecaptcha !== 'undefined' && typeof grecaptcha !== 'undefined') {
+                grecaptcha.ready(function() {
+                    grecaptcha.execute(moderniTealRecaptcha.siteKey, { action: 'contact_form' })
+                        .then(function(token) {
+                            submitForm(token);
+                        })
+                        .catch(function() {
+                            // reCAPTCHA epäonnistui, lähetä ilman tokenia
+                            submitForm(null);
+                        });
+                });
+            } else {
+                // reCAPTCHA ei käytössä, lähetä suoraan
+                submitForm(null);
+            }
         });
     }
 
