@@ -1139,6 +1139,8 @@ body.menu-open {
     #primary-menu>li {
         opacity: 1;
         transform: none;
+        width: auto;
+        max-width: none;
     }
 
     #primary-menu>li>a {
