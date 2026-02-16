@@ -340,9 +340,7 @@ ol {
         letter-spacing: 0.1em;
     }
 
-    .site-header.scrolled .header-top {
-        margin-bottom: -30px;  /* Mobile: smaller logo requires less compensation */
-    }
+    /* POISTETTU: .site-header.scrolled .header-top { margin-bottom: -30px; } */
 }
 
 /* Saavutettavuus: poista animaatiot */
@@ -392,7 +390,7 @@ ol {
 
 .site-header.scrolled .header-top {
     padding: var(--spacing-xs) 0 0;
-    margin-bottom: -40px;  /* Desktop: Kompensoi tyhjää tilaa jonka scale() jättää */
+    /* POISTETTU: margin-bottom: -40px; */
 }
 
 .site-branding {
@@ -436,9 +434,9 @@ ol {
 .custom-logo-wrapper .custom-logo {
     max-height: 120px;
     width: auto;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
     object-fit: contain;
-    transform-origin: center center;
+    /* POISTETTU: transform-origin: center center; */
 }
 .mobile-logo-wrapper {
     display: flex;
@@ -457,13 +455,12 @@ ol {
     width: auto;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
     object-fit: contain;
-    will-change: transform;
-    /* Smooth transition with better easing to prevent jitter */
+    /* POISTETTU: will-change: transform; */
 }
 
-/* Pienennetty logo skrollatessa — käytetään transform: scale() jotta layout EI muutu */
+/* Pienennetty logo skrollatessa — käytetään max-height sen sijaan että scale() */
 .site-header.scrolled .custom-logo-wrapper .custom-logo {
-    transform: scale(0.42);  /* 50px / 120px ≈ 0.42 */
+    max-height: 50px;  /* MUUTETTU: transform: scale(0.42) -> max-height: 50px */
 }
 
 /* Tablet */
@@ -473,7 +470,7 @@ ol {
     }
 
     .site-header.scrolled .custom-logo-wrapper .custom-logo {
-        transform: scale(0.37);  /* 55px / 150px ≈ 0.37 */
+        max-height: 55px;  /* MUUTETTU: transform: scale(0.37) -> max-height: 55px */
     }
 }
 
@@ -484,7 +481,7 @@ ol {
     }
 
     .site-header.scrolled .custom-logo-wrapper .custom-logo {
-        transform: scale(0.33);  /* 60px / 180px ≈ 0.33 */
+        max-height: 60px;  /* MUUTETTU: transform: scale(0.33) -> max-height: 60px */
     }
 }
 
