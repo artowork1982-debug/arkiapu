@@ -8,8 +8,6 @@
 get_header();
 ?>
 
-<?php moderni_teal_breadcrumbs(); ?>
-
 <main id="primary" class="site-content" role="main">
     <div class="container">
 
