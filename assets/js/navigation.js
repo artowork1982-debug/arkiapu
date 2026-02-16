@@ -207,6 +207,7 @@
     if (header) {
         let ticking = false;
         let scrolledLocked = false; // Estää nopean edestakaisin vaihdon
+        let scrollLockTimeout = null; // Tallentaa timeout ID:n
 
         function onScroll() {
             const currentScrollY = window.scrollY;
@@ -224,10 +225,20 @@
                 requestAnimationFrame(() => {
                     const headerHeightAfter = header.offsetHeight;
                     const heightDiff = headerHeightBefore - headerHeightAfter;
-                    if (heightDiff > 0 && currentScrollY < headerHeightBefore) {
+                    const currentScrollYAfterChange = window.scrollY; // Lue tuore scroll-positio
+                    
+                    if (heightDiff > 0 && currentScrollYAfterChange < headerHeightBefore) {
                         // Lukitse scrolled-tila hetkeksi estääksemme välkkymisen
+                        // Tyhjennä mahdollinen aikaisempi timeout
+                        if (scrollLockTimeout) {
+                            clearTimeout(scrollLockTimeout);
+                        }
+                        
                         scrolledLocked = true;
-                        setTimeout(() => { scrolledLocked = false; }, SCROLL_LOCK_DURATION_MS);
+                        scrollLockTimeout = setTimeout(() => { 
+                            scrolledLocked = false;
+                            scrollLockTimeout = null;
+                        }, SCROLL_LOCK_DURATION_MS);
                     }
                 });
 
