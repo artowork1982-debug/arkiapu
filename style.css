@@ -438,6 +438,10 @@ ol {
     display: flex;
     justify-content: center;
     margin-bottom: 25px;
+    max-width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
 }
 
 .mobile-logo-wrapper a {
@@ -446,7 +450,7 @@ ol {
 }
 
 .mobile-logo-wrapper .custom-logo {
-    max-height: 120px;
+    max-height: 100px;
     width: auto;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
     object-fit: contain;
@@ -584,6 +588,16 @@ ol {
     transform: translateY(-9px) rotate(-45deg);
 }
 
+/* Estä vaakasuuntainen skrollaus kun mobiilivalikko on auki */
+body:has(.main-navigation[aria-hidden="false"]) {
+    overflow-x: hidden;
+}
+
+/* Fallback vanhemmille selaimille */
+body.menu-open {
+    overflow-x: hidden;
+}
+
 /* Mobile Menu Overlay Container */
 .main-navigation {
     position: fixed;
@@ -594,6 +608,7 @@ ol {
     z-index: 1000;
     pointer-events: none;
     overflow: hidden;
+    overflow-x: hidden;
 }
 
 .main-navigation[aria-hidden="false"] {
@@ -615,6 +630,7 @@ ol {
     transform: translateX(100%);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -632,6 +648,7 @@ ol {
         radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
     animation: float 20s ease-in-out infinite;
     pointer-events: none;
+    overflow: hidden;
 }
 
 @keyframes float {
@@ -662,18 +679,26 @@ ol {
     min-height: 100%;
     padding: var(--spacing-3xl) var(--spacing-lg);
     padding-top: 80px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 /* Mobile Menu Links */
 #primary-menu {
     width: 100%;
     max-width: 500px;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 #primary-menu>li {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
+    width: 100%;
+    max-width: 100%;
 }
 
 .main-navigation[aria-hidden="false"] #primary-menu>li {
@@ -869,6 +894,8 @@ ol {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .main-navigation[aria-hidden="false"] .mobile-menu-search {
@@ -890,6 +917,9 @@ ol {
     font-size: 1rem;
     border-radius: var(--border-radius);
     transition: all 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .mobile-menu-search .search-field::placeholder {
@@ -933,6 +963,8 @@ ol {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .main-navigation[aria-hidden="false"] .mobile-menu-contact {
@@ -979,6 +1011,10 @@ ol {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease 0.7s, transform 0.5s ease 0.7s;
+    width: 100%;
+    max-width: 500px;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .main-navigation[aria-hidden="false"] .mobile-menu-social {
